@@ -1,29 +1,43 @@
 package com.antdevrealm.pricer_backend;
 
+import com.antdevrealm.pricer_backend.spike.dto.SparPriceResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import tools.jackson.databind.JsonNode;
+import org.springframework.web.client.RestClientResponseException;
 
 
 @Component
 public class AppRunner implements CommandLineRunner {
 
+    private static final Logger log = LoggerFactory.getLogger(AppRunner.class);
+
     private static final String USER_AGENT =
             "pricer-backend/0.1 (+https://github.com/AntoanYosifov/pricer-backend) portfolio project";
 
-    private final RestClient client = RestClient.builder()
-            .defaultHeader(HttpHeaders.USER_AGENT, USER_AGENT)
-            .build();
+    private static final String ARTICLE_ID = "2824994";
+    private static final String OUTLET = "8999";
+
+
+    private final RestClient client;
 
     private final String priceUrl;
     private final String productUrl;
 
-    public AppRunner(@Value("${spar.api.price-url}") String priceUrl,
+    public AppRunner(RestClient.Builder builder,
+                     @Value("${spar.api.price-url}") String priceUrl,
                      @Value("${spar.api.product-url}") String productUrl) {
+        this.client = builder.defaultHeader(HttpHeaders.USER_AGENT, USER_AGENT)
+                .defaultStatusHandler(HttpStatusCode::isError, (req, res) -> {
+                })
+                .build();
         this.priceUrl = priceUrl;
         this.productUrl = productUrl;
     }
@@ -36,22 +50,31 @@ public class AppRunner implements CommandLineRunner {
             return;
         }
 
-        JsonNode price = client.get()
-                .uri(priceUrl)
-                .retrieve()
-                .body(JsonNode.class);
+        try {
+            ResponseEntity<SparPriceResponse> response = client.get()
+                    .uri(priceUrl + "?articleId={articleId}&outlet={outlet}", ARTICLE_ID, OUTLET)
+                    .retrieve()
+                    .toEntity(SparPriceResponse.class);
 
-        assert price != null;
-        System.out.println("=== PRICE");
-        System.out.println(price.toPrettyString());
+            log.info("HTTP {} — x-remaining-requests: {}",
+                    response.getStatusCode(),
+                    response.getHeaders().getFirst("x-remaining-requests"));
 
-        JsonNode product = client.get()
-                .uri(productUrl)
-                .retrieve()
-                .body(JsonNode.class);
+            SparPriceResponse body = response.getBody();
+            log.info("outlet={} (from the request, not the response)", OUTLET);
+            log.info("parsed: {}", body);
 
-        assert product != null;
-        System.out.println("=== PRODUCT");
-        System.out.println(product.toPrettyString());
+            if (body != null && body.comparisonPrice() != null) {
+                log.info("price={} unit_price={} per {} {}",
+                        body.calculatedPrice(),
+                        body.comparisonPrice().price(),
+                        body.comparisonPrice().quantity(),
+                        body.comparisonPrice().unit());
+            }
+
+        } catch (RestClientResponseException e) {
+            log.error("Spar returned {} — body: {}", e.getStatusCode(), e.getResponseBodyAsString());
+        }
+
     }
 }
