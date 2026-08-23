@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientResponseException;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -88,9 +89,16 @@ public class AppRunner implements CommandLineRunner {
                         Instant.now(),
                         body.calculatedPrice(),
                         body.comparisonPrice().price());
+
+                System.out.println("Entiy: " + obsEntity.toString());
                 try {
-                    SpikePriceObservation savedEntity = this.repository.save(obsEntity);
-                    log.info(savedEntity.toString());
+                    BigDecimal unitPrice = body.comparisonPrice().price();
+                    System.out.println("---------------");
+                    System.out.println("Unit Price: " + unitPrice);
+                    int affectedRows = this.repository.upsert(body.articleId(), OUTLET,
+                            LocalDate.now(ZoneId.of("Europe/Vienna")), Instant.now(), body.calculatedPrice(),
+                            unitPrice);
+                    log.info("Affected rows: {}", affectedRows);
                 } catch (DataIntegrityViolationException e) {
                     log.error(e.getMessage());
                 }
