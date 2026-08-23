@@ -1,23 +1,24 @@
 package com.antdevrealm.pricer_backend;
 
-import com.antdevrealm.pricer_backend.spike.SpikePriceObservation;
 import com.antdevrealm.pricer_backend.spike.SpikePriceObservationRepository;
 import com.antdevrealm.pricer_backend.spike.dto.SparPriceResponse;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientResponseException;
+import tools.jackson.databind.ObjectMapper;
 
-import java.math.BigDecimal;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -33,25 +34,29 @@ public class AppRunner implements CommandLineRunner {
 
     private static final String ARTICLE_ID = "2824994";
     private static final String OUTLET = "8999";
-
-
-    private final RestClient client;
-
     private final String priceUrl;
     private final String productUrl;
+
+    private final RestClient client;
+    private final ObjectMapper objectMapper;
 
     private final SpikePriceObservationRepository repository;
 
     @Autowired
-    public AppRunner(RestClient.Builder builder,
-                     @Value("${spar.api.price-url}") String priceUrl,
-                     @Value("${spar.api.product-url}") String productUrl, SpikePriceObservationRepository repository) {
+    public AppRunner(
+            @Value("${spar.api.price-url}") String priceUrl,
+            @Value("${spar.api.product-url}") String productUrl,
+            RestClient.Builder builder,
+            ObjectMapper objectMapper,
+            SpikePriceObservationRepository repository
+    ) {
         this.client = builder.defaultHeader(HttpHeaders.USER_AGENT, USER_AGENT)
                 .defaultStatusHandler(HttpStatusCode::isError, (req, res) -> {
                 })
                 .build();
         this.priceUrl = priceUrl;
         this.productUrl = productUrl;
+        this.objectMapper = objectMapper;
         this.repository = repository;
     }
 
@@ -64,16 +69,24 @@ public class AppRunner implements CommandLineRunner {
         }
 
         try {
-            ResponseEntity<SparPriceResponse> response = client.get()
+            ResponseEntity<String> response = client.get()
                     .uri(priceUrl + "?articleId={articleId}&outlet={outlet}", ARTICLE_ID, OUTLET)
                     .retrieve()
-                    .toEntity(SparPriceResponse.class);
+                    .toEntity(String.class);
+
+            LocalDate observedOn = LocalDate.now(ZoneId.of("Europe/Vienna"));
+            Instant fetchedAt = Instant.now();
 
             log.info("HTTP {} — x-remaining-requests: {}",
                     response.getStatusCode(),
                     response.getHeaders().getFirst("x-remaining-requests"));
 
-            SparPriceResponse body = response.getBody();
+            String rawJson = response.getBody();
+
+            archive("price", ARTICLE_ID, observedOn, rawJson);
+
+            SparPriceResponse body = objectMapper.readValue(rawJson, SparPriceResponse.class);
+
             log.info("outlet={} (from the request, not the response)", OUTLET);
             log.info("parsed: {}", body);
 
@@ -84,27 +97,32 @@ public class AppRunner implements CommandLineRunner {
                         body.comparisonPrice().quantity(),
                         body.comparisonPrice().unit());
 
-                SpikePriceObservation obsEntity = new SpikePriceObservation(body.articleId(), OUTLET,
-                        LocalDate.now(ZoneId.of("Europe/Vienna")),
-                        Instant.now(),
-                        body.calculatedPrice(),
+                int affectedRows = this.repository.upsert(body.articleId(), OUTLET, observedOn,
+                        fetchedAt, body.calculatedPrice(),
                         body.comparisonPrice().price());
 
-                System.out.println("Entiy: " + obsEntity.toString());
-                try {
-                    BigDecimal unitPrice = body.comparisonPrice().price();
-                    System.out.println("---------------");
-                    System.out.println("Unit Price: " + unitPrice);
-                    int affectedRows = this.repository.upsert(body.articleId(), OUTLET,
-                            LocalDate.now(ZoneId.of("Europe/Vienna")), Instant.now(), body.calculatedPrice(),
-                            unitPrice);
-                    log.info("Affected rows: {}", affectedRows);
-                } catch (DataIntegrityViolationException e) {
-                    log.error(e.getMessage());
-                }
+                log.info("Affected rows: {}", affectedRows);
             }
         } catch (RestClientResponseException e) {
             log.error("Spar returned {} — body: {}", e.getStatusCode(), e.getResponseBodyAsString());
+        }
+    }
+
+    private void archive(String kind, String articleId, LocalDate date, String body) {
+        if (body == null) {
+            log.warn("nothing to archive for {} {} on {} - empty response body", kind, articleId, date);
+            return;
+        }
+
+        Path path = Path.of("var", "raw", "spar", kind, date.toString(),
+                articleId + "-" + OUTLET + ".json");
+
+        try {
+            Files.createDirectories(path.getParent());
+            Files.writeString(path, body);
+            log.info("archived {} -> {}", kind, path);
+        } catch (IOException e) {
+            log.warn("could not archive {} for {} on {}: {}", kind, articleId, date, e.toString());
         }
     }
 }
