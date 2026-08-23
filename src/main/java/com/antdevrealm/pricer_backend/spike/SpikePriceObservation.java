@@ -82,4 +82,19 @@ public class SpikePriceObservation {
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
+
+    @Override
+    public String toString() {
+        return "SpikePriceObservation{" +
+                "id=" + id +
+                ", externalId='" + externalId + '\'' +
+                ", outlet='" + outlet + '\'' +
+                ", observedOn=" + observedOn +
+                ", fetchedAt=" + fetchedAt +
+                ", price=" + price +
+                ", unitPrice=" + unitPrice +
+                '}';
+    }
 }
+
+
