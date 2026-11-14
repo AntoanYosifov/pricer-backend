@@ -1,0 +1,150 @@
+products:
+  - slug: butter
+    name: Butter
+    unit_type: WEIGHT
+    category: butter
+    retailers:
+      spar:
+        external_id: "2020001016297"
+        url: https://www.spar.at/produktwelt/s-budget-butter-p2020001016297
+        # S-BUDGET Butter 250 g — budget tier, "Immer billig!"
+
+  - slug: vollmilch
+    name: Vollmilch 3,5%
+    unit_type: VOLUME
+    category: milch
+    retailers:
+      spar:
+        external_id: "2020000586531"
+        url: https://www.spar.at/produktwelt/s-budget-vollmilch-3-5-fett-laenger-frisch-p2020000586531
+        # S-BUDGET Vollmilch 3,5% Fett länger frisch (ESL) 1 l, AMA — no classic fresh S-Budget milk
+
+  - slug: eier
+    name: Eier
+    unit_type: PIECE
+    category: eier
+    retailers:
+      spar:
+        external_id: "2020002939328"
+        url: https://www.spar.at/produktwelt/s-budget-frische-eier-aus-freilandhaltung-p2020002939328
+        # S-BUDGET Frische Eier aus Freilandhaltung 10 Stk, AMA — free-range, size not stated on page
+
+  - slug: naturjoghurt
+    name: Naturjoghurt 3,6%
+    unit_type: WEIGHT
+    category: joghurt
+    retailers:
+      spar:
+        external_id: "2020004740526"
+        url: https://www.spar.at/produktwelt/s-budget-naturjogurt-3-6-fett-p2020004740526
+        # S-BUDGET Naturjogurt 3,6% Fett 500 g, AMA
+
+  - slug: gouda-geschnitten
+    name: Gouda in Scheiben
+    unit_type: WEIGHT
+    category: kaese
+    retailers:
+      spar:
+        external_id: "1407969"
+        url: https://www.spar.at/produktwelt/s-budget-gouda-48-f-i-t-in-scheiben-p1407969
+        # S-BUDGET Gouda 48% F.i.T. in Scheiben 400 g — note: 7-digit ID, unlike the 13-digit ones above
+
+  - slug: toastbrot
+    name: Toastbrot
+    unit_type: WEIGHT
+    category: brot
+    retailers:
+      spar:
+        external_id: "7088087"
+        url: https://www.spar.at/produktwelt/s-budget-toastbrot-p7088087
+        # S-BUDGET Toastbrot 500 g
+
+  - slug: weizenmehl-glatt
+    name: Weizenmehl glatt
+    unit_type: WEIGHT
+    category: mehl
+    retailers:
+      spar:
+        external_id: "6483661"
+        url: https://www.spar.at/produktwelt/s-budget-weizenmehl-glatt-type-w-700-p6483661
+        # S-BUDGET Weizenmehl Glatt, Type W 700, 1 kg
+
+  - slug: kristallzucker
+    name: Kristallzucker
+    unit_type: WEIGHT
+    category: zucker
+    retailers:
+      spar:
+        external_id: "2020000710103"
+        url: https://www.spar.at/produktwelt/s-budget-feinkristallzucker-p2020000710103
+        # S-BUDGET Feinkristallzucker 1 kg
+
+  - slug: spaghetti
+    name: Spaghetti
+    unit_type: WEIGHT
+    category: teigwaren
+    retailers:
+      spar:
+        external_id: "6483722"
+        url: https://www.spar.at/produktwelt/s-budget-spaghetti-p6483722
+        # S-BUDGET Spaghetti 1 kg — only S-Budget size; no 500 g pack
+
+  - slug: reis
+    name: Langkornreis
+    unit_type: WEIGHT
+    category: reis
+    retailers:
+      spar:
+        external_id: "6481889"
+        url: https://www.spar.at/produktwelt/s-budget-langkornreis-p6481889
+        # S-BUDGET Langkornreis 1 kg
+
+  - slug: sonnenblumenoel
+    name: Sonnenblumenöl
+    unit_type: VOLUME
+    category: speiseoel
+    retailers:
+      spar:
+        external_id: "2020004862983"
+        url: https://www.spar.at/produktwelt/s-budget-100-reines-sonnenblumenoel-p2020004862983
+        # S-BUDGET 100% Reines Sonnenblumenöl 1 l
+
+  - slug: kaffee-gemahlen
+    name: Kaffee gemahlen
+    unit_type: WEIGHT
+    category: kaffee
+    retailers:
+      spar:
+        external_id: "6612214"
+        url: https://www.spar.at/produktwelt/s-budget-caffe-classico-gemahlen-p6612214
+        # S-BUDGET Caffè Classico gemahlen 500 g
+
+  - slug: mineralwasser
+    name: Mineralwasser prickelnd
+    unit_type: VOLUME
+    category: mineralwasser
+    retailers:
+      spar:
+        external_id: "2020005350939"
+        url: https://www.spar.at/produktwelt/s-budget-astoria-natuerliches-mineralwasser-prickelnd-p2020005350939
+        # S-BUDGET Astoria Natürliches Mineralwasser prickelnd 1,5 l — Einweg mit Pfand; API price 0.42 EXCLUDES deposit (0.42/1.5 = 0.28 €/l = comparisonPrice), no Pfand field in payload
+
+  - slug: kartoffeln
+    name: Kartoffeln
+    unit_type: WEIGHT
+    category: kartoffeln
+    retailers:
+      spar:
+        external_id: "1829037"
+        url: https://www.spar.at/produktwelt/s-budget-kartoffeln-p1829037
+        # S-BUDGET Kartoffeln 5 kg — large bag; bulk packs have a lower €/kg than 2 kg bags
+
+  - slug: bananen
+    name: Bananen
+    unit_type: WEIGHT
+    category: obst
+    retailers:
+      spar:
+        external_id: "6942526"
+        url: https://www.spar.at/produktwelt/s-budget-bananen-per-kg-p6942526
+        # S-BUDGET Bananen per kg — loose, sold by weight; no pack size shown on the page
