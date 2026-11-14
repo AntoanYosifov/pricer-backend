@@ -1,0 +1,144 @@
+{
+    "productId": "6942526",
+    "assets": [
+        {
+            "altText": "GE_S-Budget_Logo_mit_Tannen_HB.ai S-Budget_Logo_mit_Tannen.jpg",
+            "heightPixel": "429",
+            "position": "position:main",
+            "preview": "/cachableservlets/brandImage.dam/at/S-BUDGET/HB_50px.jpg",
+            "servletBaseUrl": "https://cdn1.interspar.at/cachableservlets/brandImage.dam/at/S-BUDGET/HB_{size}px.{ext}",
+            "type": "brandimage",
+            "widthPixel": "595"
+        },
+        {
+            "altText": "Produktbild von S-BUDGET, Bananen per kg",
+            "heightPixel": "2363",
+            "position": "position:main",
+            "preview": "/cachableservlets/articleImage.dam/at/6942526/HB_50px.jpg",
+            "servletBaseUrl": "https://cdn1.interspar.at/cachableservlets/articleImage.dam/at/6942526/HB_{size}px.{ext}",
+            "type": "image",
+            "widthPixel": "2362"
+        }
+    ],
+    "categories": [
+        {
+            "categoryId": "suedfruechte-exotisches",
+            "categoryType": "productworldCategory",
+            "title": "Südfrüchte & Exotisches"
+        }
+    ],
+    "classificationStoreAttribute": {
+        "amount": {
+            "feName": "Menge",
+            "sequence": 24,
+            "values": [
+                {
+                    "valueString": "1,000"
+                }
+            ]
+        },
+        "unit": {
+            "feName": "Einheit",
+            "sequence": 25,
+            "values": [
+                {
+                    "valueString": "KG"
+                }
+            ]
+        },
+        "fairtrade": {
+            "feName": "Fairtrade",
+            "sequence": 17,
+            "values": [
+                {
+                    "valueBoolean": false
+                }
+            ]
+        },
+        "organic": {
+            "feName": "Bio",
+            "sequence": 16,
+            "values": [
+                {
+                    "valueBoolean": false,
+                    "valueString": "nicht bio"
+                }
+            ]
+        }
+    },
+    "indexing": "index, follow",
+    "name1": "S-BUDGET",
+    "name2": "Bananen per kg",
+    "preorderable": false,
+    "productClassificationStore": {
+        "amount": {
+            "feName": "Menge",
+            "values": [
+                {
+                    "valueString": "1,000"
+                }
+            ]
+        },
+        "unit": {
+            "feName": "Einheit",
+            "values": [
+                {
+                    "valueString": "KG"
+                }
+            ]
+        },
+        "classificationCountry": {
+            "feName": "Land",
+            "values": [
+                {
+                    "valueString": "Ecuador"
+                }
+            ]
+        },
+        "fairtrade": {
+            "feName": "Fairtrade",
+            "values": [
+                {
+                    "valueBoolean": false
+                }
+            ]
+        },
+        "tradeQualityGrade": {
+            "feName": "O&G-Handelsklasse",
+            "values": [
+                {
+                    "valueString": "I"
+                }
+            ]
+        },
+        "additionalAmount": {
+            "feName": "Zusatzmenge",
+            "values": [
+                {
+                    "valueString": "per kg"
+                }
+            ]
+        },
+        "organic": {
+            "feName": "Bio",
+            "values": [
+                {
+                    "valueBoolean": false,
+                    "valueString": "nicht bio"
+                }
+            ]
+        },
+        "tradeItemMarketingMessage": {
+            "feName": "Marketingbotschaft",
+            "values": [
+                {
+                    "valueString": "Mit ihrem hohen Stärkegehalt sind Bananen vielseitig einsetzbar – ob pur, kalt oder warm, sie passen in viele Alltagssituationen und bringen natürliche Süße ins Spiel."
+                }
+            ]
+        }
+    },
+    "productKind": "OG",
+    "pwCategoryPathKeywords": "Lebensmittel|Obst & Gemüse|Obst|Südfrüchte & Exotisches",
+    "pwCategoryPathIDs": "lebensmittel|obst-gemuese|obst|suedfruechte-exotisches",
+    "slug": "s-budget-bananen-per-kg-p6942526"
+}

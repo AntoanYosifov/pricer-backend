@@ -1,0 +1,30 @@
+{
+    "articleId": "2020001016297",
+    "basePrice": 1.59,
+    "calculatedPrice": 1.59,
+    "forDate": "2026-11-14",
+    "salesChannel": "NATIONAL",
+    "aktionsKennzeichen": {
+        "hasAktionsPrice": false,
+        "hasAppVoucher": false,
+        "immerBillig": true,
+        "inAngebot": false,
+        "mengenRabatt": false,
+        "prozentRabatt": false,
+        "promotionBadgeText": null,
+        "preisGesenkt": {
+            "isPreisGesenkt": false,
+            "preisGesenktAb": null,
+            "preisGesenktType": "KA"
+        }
+    },
+    "comparisonPrice": {
+        "price": 6.36,
+        "quantity": 1,
+        "unit": "kg"
+    },
+    "displayQuantity": null,
+    "displayUnit": null,
+    "omnibusPrice": null,
+    "stattPrice": null
+}

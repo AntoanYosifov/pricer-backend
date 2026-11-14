@@ -1,0 +1,25 @@
+{
+    "articleId": "6942526",
+    "basePrice": 1.49,
+    "calculatedPrice": 1.49,
+    "forDate": "2026-11-14",
+    "salesChannel": "NATIONAL",
+    "aktionsKennzeichen": {
+        "hasAktionsPrice": true,
+        "hasAppVoucher": false,
+        "immerBillig": false,
+        "inAngebot": true,
+        "mengenRabatt": false,
+        "prozentRabatt": false,
+        "promotionBadgeText": null,
+        "preisGesenkt": {
+            "isPreisGesenkt": false,
+            "preisGesenktAb": null,
+            "preisGesenktType": "KA"
+        }
+    },
+    "displayQuantity": null,
+    "displayUnit": null,
+    "omnibusPrice": 1.49,
+    "stattPrice": 1.59
+}

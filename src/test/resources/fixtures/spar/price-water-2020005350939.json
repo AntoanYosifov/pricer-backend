@@ -1,0 +1,30 @@
+{
+    "articleId": "2020005350939",
+    "basePrice": 0.42,
+    "calculatedPrice": 0.42,
+    "forDate": "2026-11-14",
+    "salesChannel": "NATIONAL",
+    "aktionsKennzeichen": {
+        "hasAktionsPrice": false,
+        "hasAppVoucher": false,
+        "immerBillig": true,
+        "inAngebot": false,
+        "mengenRabatt": false,
+        "prozentRabatt": false,
+        "promotionBadgeText": null,
+        "preisGesenkt": {
+            "isPreisGesenkt": false,
+            "preisGesenktAb": null,
+            "preisGesenktType": "KA"
+        }
+    },
+    "comparisonPrice": {
+        "price": 0.28,
+        "quantity": 1,
+        "unit": "l"
+    },
+    "displayQuantity": null,
+    "displayUnit": null,
+    "omnibusPrice": null,
+    "stattPrice": null
+}
