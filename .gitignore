@@ -43,7 +43,7 @@ out/
 ### Local-only project docs — kept out of the public repo ###
 CLAUDE.md
 PROJECT-DOC.md
-the-four-questions.md
+four_questions/the-four-questions.md
 
 ### Raw source payloads — runtime archive, never committed ###
 var/

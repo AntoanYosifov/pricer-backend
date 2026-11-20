@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: en-US
+
+reviews:
+  profile: chill
+  poem: false
+  auto_review:
+    enabled: true
+    drafts: false
+  path_filters:
+    - "!gradle/wrapper/**"
+  path_instructions:
+    - path: "src/main/java/**"
+      instructions: |
+        Money is BigDecimal with an explicit scale and a named RoundingMode. Never double or float.
+        Time: java.time.Clock is injected. Flag LocalDate.now(), LocalDateTime.now() or Instant.now()
+        called without a Clock. observed_on is a business date in Europe/Vienna; fetched_at is UTC.
+    - path: "src/main/java/**/ingestion/**"
+      instructions: |
+        An optional source field (e.g. Spar comparisonPrice, stattPrice, omnibusPrice) must never
+        prevent a row from being written. Only a missing required field (calculatedPrice) may fail,
+        and it must fail loudly.
+        HTTP 4xx/5xx must surface as an error. It must never be swallowed and parsed into an all-null record.
+        A product missing from the feed is status UNAVAILABLE with a null price, never price 0.
+        price_observation is written only via the native INSERT ... ON CONFLICT
+        (retailer_product_id, outlet_id, observed_on) upsert, never repository.save().
+        Flag any code path where an item is skipped without a log line or an error.
+    - path: "src/main/resources/db/migration/**"
+      instructions: |
+        Migrations are append-only. Flag any modification to an existing V*__ file; changes belong
+        in a new version. Enums are text plus a named CHECK, never CREATE TYPE ... AS ENUM.
+        No ON DELETE CASCADE. Money is numeric(10,2). Every constraint is named.
+    - path: "src/test/**"
+      instructions: |
+        Tests never hit the network (fixtures or WireMock). Assert against fixture values, never
+        live prices. Repository tests use Testcontainers PostgreSQL, not H2. Pin the Clock.
+    - path: ".github/workflows/**"
+      instructions: |
+        Every `uses:` is pinned to a full 40-character commit SHA with a `# vX.Y.Z` comment.
+        Flag tags and branches. Flag permissions broader than the job needs.
+
+chat:
+  auto_reply: true
