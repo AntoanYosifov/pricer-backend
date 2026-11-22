@@ -1,0 +1,26 @@
+name: Chore
+description: Maintenance, tooling, dependencies, or cleanup — no behaviour change
+title: "chore: "
+labels: ["type: chore"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What
+      description: The change, in a sentence or two.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: The failure it prevents or the friction it removes.
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: How you will know it worked. Optional for trivial chores.
+      value: |
+        - [ ]
