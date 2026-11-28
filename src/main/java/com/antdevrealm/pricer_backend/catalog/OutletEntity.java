@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import org.hibernate.annotations.Generated;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -45,9 +46,9 @@ public class OutletEntity {
     }
 
     public OutletEntity(RetailerEntity retailer, String externalCode, String name, boolean isDefault) {
-        this.retailer = retailer;
-        this.externalCode = externalCode;
-        this.name = name;
+        this.retailer = Objects.requireNonNull(retailer, "retailer");
+        this.externalCode = Objects.requireNonNull(externalCode, "externalCode");
+        this.name = Objects.requireNonNull(name, "name");
         this.isDefault = isDefault;
     }
 
@@ -68,7 +69,7 @@ public class OutletEntity {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = Objects.requireNonNull(name, "name");
     }
 
     public boolean isDefault() {

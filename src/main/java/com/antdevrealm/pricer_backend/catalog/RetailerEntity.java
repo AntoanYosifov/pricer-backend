@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import org.hibernate.annotations.Generated;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -36,9 +37,9 @@ public class RetailerEntity {
     }
 
     public RetailerEntity(String code, String name, String websiteUrl) {
-        this.code = code;
-        this.name = name;
-        this.websiteUrl = websiteUrl;
+        this.code = Objects.requireNonNull(code, "code");
+        this.name = Objects.requireNonNull(name, "name");
+        this.websiteUrl = Objects.requireNonNull(websiteUrl, "websiteUrl");
     }
 
     public UUID getId() {
@@ -54,7 +55,7 @@ public class RetailerEntity {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = Objects.requireNonNull(name, "name");
     }
 
     public String getWebsiteUrl() {
@@ -62,7 +63,7 @@ public class RetailerEntity {
     }
 
     public void setWebsiteUrl(String websiteUrl) {
-        this.websiteUrl = websiteUrl;
+        this.websiteUrl = Objects.requireNonNull(websiteUrl, "websiteUrl");
     }
 
     public Instant getCreatedAt() {
